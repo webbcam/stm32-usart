@@ -1,3 +1,7 @@
 [submodule "thirdparty/libopencm3"]
 	path = thirdparty/libopencm3
 	url = https://github.com/libopencm3/libopencm3
+[submodule "thirdparty/FreeRTOS"]
+	path = thirdparty/FreeRTOS
+	url = https://github.com/FreeRTOS/FreeRTOS.git
+	branch = V10.3.1

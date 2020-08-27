@@ -7,7 +7,7 @@ PREFIX		?= arm-none-eabi
 TOP_DIR 	:= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 THIRD_PARTY := $(abspath $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/thirdparty)
 OPENCM3_DIR 	:= $(THIRD_PARTY)/libopencm3
-FREERTOS_DIR 	:= $(THIRD_PARTY)/FreeRTOS
+FREERTOS_DIR 	:= $(THIRD_PARTY)/FreeRTOS/FreeRTOS/Source
 
 LIBNAME		= opencm3_stm32f1
 DEFS		+= -DSTM32F1
