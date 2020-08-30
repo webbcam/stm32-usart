@@ -114,18 +114,3 @@ add_custom_target(flash DEPENDS ${PROJECT_NAME}.bin)
 add_custom_command(TARGET flash USES_TERMINAL
     COMMAND ${FLASHCMD}
 )
-
-#message(STATUS "System Processor      : ${CMAKE_SYSTEM_PROCESSOR}")
-#message(STATUS
-#    "BUILD FLAGS:"
-#    "   STM32_DEFINES   : ${STM32_DEFINES}"
-#    "   c flags         : ${CMAKE_C_FLAGS}"
-#    "   c++ flags       : ${CMAKE_CXX_FLAGS}"
-#    "   cpp flags       : ${CMAKE_CPP_FLAGS}"
-#    "   asm flags       : ${CMAKE_ASM_FLAGS}"
-#    "   ld flags        : ${CMAKE_EXE_LINKER_FLAGS}"
-#    "   optimizations   : ${COMPILER_OPTIMIZATIONS}"
-#    "   FreeRTOS        : ${FREERTOS_INC_DIR}"
-#    "   libopencm3      : ${LIBOPENCM3_INC_DIR}"
-#    "   debug UART      : ${USE_DBGUART}"
-#)
