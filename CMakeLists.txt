@@ -5,33 +5,23 @@ enable_language(C ASM)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
-
-# Include cmake files
-include(${CMAKE_SOURCE_DIR}/cmake/arm_none_eabi_cortex_m3.cmake)
-include(${CMAKE_SOURCE_DIR}/cmake/libopencm3.cmake)
-include(${CMAKE_SOURCE_DIR}/cmake/flash.cmake)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Set directories
 set(THIRDPARTY_DIR "${CMAKE_SOURCE_DIR}/thirdparty")
-set(FREERTOS_DIR "${THIRDPARTY_DIR}/FreeRTOS/FreeRTOS/Source")
 
-# Only build for arm-none-eabi
-if (NOT CMAKE_SYSTEM_PROCESSOR STREQUAL "arm-none-eabi")
-    message(FATAL_ERROR "Invalid CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
-endif()
-
-
-# Set Architecture flags
-set(ARCH_FLAGS -msoft-float -mthumb -mcpu=cortex-m3 -mfix-cortex-m3-ldrd)
-
-# Set STM32 SoC specific variables
+# Set STM32 defines
 set(STM32_DEFINES
     STM32F1
 )
 
-set(COMPILER_OPTIMIZATIONS -Os -g)
+# Set Architecture flags
+set(ARCH_FLAGS -msoft-float -mthumb -mcpu=cortex-m3 -mfix-cortex-m3-ldrd)
 
-# Custom STM32 options for assembler and gcc
+# Set Compiler optimization flags
+set(COMPILER_OPTIMIZATIONS -O0 -g)
+
+# Set custom STM32 options for assembler and gcc
 set(STM32_ASM_OPTIONS -mthumb -mcpu=cortex-m3)
 
 set(STM32_C_COMPILER_OPTIONS ${ARCH_FLAGS}
@@ -55,18 +45,22 @@ set(LDLIBS -specs=nosys.specs -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-grou
 
 set(STM32_LD_OPTIONS -T${LINKER_SCRIPT} ${ARCH_FLAGS} -Wl,-Map=${PROJECT_NAME}.map -Wl,--gc-sections ${LDLIBS})
 
+# Include cmake files
+include(${CMAKE_SOURCE_DIR}/cmake/arm_none_eabi_cortex_m3.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/libopencm3.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/freertos.cmake)
+include(${CMAKE_SOURCE_DIR}/cmake/flash.cmake)
+
+# Only build for arm-none-eabi
+if (NOT CMAKE_SYSTEM_PROCESSOR STREQUAL "arm-none-eabi")
+    message(FATAL_ERROR "Invalid CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
+endif()
+
 set(SOURCES 
     ${CMAKE_SOURCE_DIR}/src/main.c
-    ${FREERTOS_DIR}/croutine.c
-    ${FREERTOS_DIR}/event_groups.c
-    ${FREERTOS_DIR}/list.c
-    ${FREERTOS_DIR}/queue.c
-    ${FREERTOS_DIR}/tasks.c
-    ${FREERTOS_DIR}/timers.c
-    ${FREERTOS_DIR}/portable/GCC/ARM_CM3/port.c
-    ${FREERTOS_DIR}/portable/MemMang/heap_4.c
 )
 
+# Set executable
 set(EXECUTABLE ${PROJECT_NAME}.elf)
 add_executable(${EXECUTABLE} ${SOURCES})
 
@@ -75,8 +69,6 @@ add_dependencies(${EXECUTABLE} ${EXTERNAL_DEPENDENCIES})
 
 target_include_directories(${EXECUTABLE} PRIVATE
     ${CMAKE_SOURCE_DIR}/inc
-    ${FREERTOS_DIR}/include
-    ${FREERTOS_DIR}/portable/GCC/ARM_CM3
     #${EXTERNAL_INCLUDE_DIRECTORIES}
 )
 
