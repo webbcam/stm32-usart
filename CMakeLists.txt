@@ -65,11 +65,13 @@ set(EXECUTABLE ${PROJECT_NAME}.elf)
 add_executable(${EXECUTABLE} ${SOURCES})
 
 # Add external dependencies
-add_dependencies(${EXECUTABLE} ${EXTERNAL_DEPENDENCIES})
+if (NOT "${EXTERNAL_DEPENDENCIES}" STREQUAL "")
+    add_dependencies(${EXECUTABLE} ${EXTERNAL_DEPENDENCIES})
+endif()
 
 target_include_directories(${EXECUTABLE} PRIVATE
     ${CMAKE_SOURCE_DIR}/inc
-    #${EXTERNAL_INCLUDE_DIRECTORIES}
+    ${EXTERNAL_INCLUDE_DIRECTORIES}
 )
 
 target_compile_definitions(${EXECUTABLE} PRIVATE 
