@@ -87,16 +87,19 @@ target_compile_options(${EXECUTABLE} PRIVATE
 
 #target_link_directories(${EXECUTABLE} PRIVATE ${EXTERNAL_LINK_DIRECTORIES})
 target_link_libraries(${EXECUTABLE} ${STM32_LD_OPTIONS} ${EXTERNAL_LINKER_FLAGS} ${EXTERNAL_LIBS})
+set_target_properties(${EXECUTABLE} PROPERTIES ADDITIONAL_CLEAN_FILES "${PROJECT_NAME}.map")
 
 add_custom_target( ${PROJECT_NAME}.hex ALL 
     DEPENDS ${PROJECT_NAME}.elf
     COMMAND ${CMAKE_OBJCOPY} -O ihex ${PROJECT_NAME}.elf ${PROJECT_NAME}.hex
+    BYPRODUCTS ${PROJECT_NAME}.hex
     COMMENT "Generating ${PROJECT_NAME}.hex"
 )
 
 add_custom_target( ${PROJECT_NAME}.bin ALL 
     DEPENDS ${PROJECT_NAME}.elf
     COMMAND ${CMAKE_OBJCOPY} -O binary ${PROJECT_NAME}.elf ${PROJECT_NAME}.bin
+    BYPRODUCTS ${PROJECT_NAME}.bin
     COMMENT "Generating ${PROJECT_NAME}.bin"
 )
 
