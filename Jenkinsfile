@@ -13,8 +13,11 @@ pipeline {
             steps {
                 echo 'Building...'
                 sh 'mkdir build'
-                sh 'cd build && cmake .. -DCMAKE_BUILD_TYPE=RELEASE'
-                sh 'cd build && make'
+                dir("build") {
+                    sh 'pwd'
+                    sh 'cmake .. -DCMAKE_BUILD_TYPE=RELEASE'
+                    sh 'make'
+                }
             }
         }
         stage('Test') {
