@@ -19,6 +19,11 @@ pipeline {
                     sh 'make'
                 }
             }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'build/*.elf'
+                }
+            }
         }
         stage('Test') {
             steps {
