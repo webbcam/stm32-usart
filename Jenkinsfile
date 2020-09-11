@@ -4,7 +4,6 @@ pipeline {
     agent {
         docker {
             image 'webbcam/arm-none-eabi-gcc'
-            args '-u root'
         }
     }
 
@@ -21,7 +20,7 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts artifacts: 'build/*.elf'
+                    zip archive: true, dir: 'build', glob: '*.map, *.elf, *.bin', zipFile: "${env.JOB_NAME}-${env.BUILD_NUMBER}.zip"
                 }
             }
         }
