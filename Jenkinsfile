@@ -1,7 +1,6 @@
 #!/usr/bin/env groovy
 
 pipeline {
-
     agent {
         docker {
             image 'webbcam/arm-none-eabi-gcc'
