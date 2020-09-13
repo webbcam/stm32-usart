@@ -1,11 +1,26 @@
 cmake_minimum_required(VERSION 3.18)
-project(stm32f1 VERSION 0.1)
+
+# Set build type
+if (NOT DEFINED CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE DEBUG)
+else()
+    string(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE)
+endif()
+
+# Set version number
+if (NOT DEFINED BUILD_VERSION)
+    string(TIMESTAMP BUILD_VERSION "%Y.%m%d.%H%M%S")
+endif()
+
+
+project(stm32f1 VERSION ${BUILD_VERSION})
 
 enable_language(C ASM)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+configure_file(${CMAKE_SOURCE_DIR}/cmake/version.h.in ${CMAKE_SOURCE_DIR}/inc/version.h)
 
 # Set directories
 set(THIRDPARTY_DIR "${CMAKE_SOURCE_DIR}/thirdparty")

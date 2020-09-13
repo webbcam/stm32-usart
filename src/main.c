@@ -2,6 +2,7 @@
 #include "task.h"
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/gpio.h>
+#include "version.h"
 
 #if 0
 extern void vApplicationStackOverflowHook(TaskHandle_t *pxTask,signed portCHAR *pcTaskName);
