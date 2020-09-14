@@ -1,5 +1,5 @@
-# STM32F1-Blink
-Boilerplate project that uses FreeRTOS and libopencm3 for blinking LED on STM32F1 board
+# STM32F1-USART
+Boilerplate project that uses FreeRTOS and libopencm3 for using USART on STM32F1 board
 
 ## How to clone
 This project uses git submodules for handling dependencies
